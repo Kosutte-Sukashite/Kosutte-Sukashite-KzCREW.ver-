@@ -7,6 +7,28 @@
     tools:context="slj.myapplication.Game_Activity">
 
     <TextView android:text="hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/hello_world" />
+
+    <ImageView
+        android:src="@drawable/woman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/woman"
+        android:layout_alignTop="@+id/hello_world"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        />
+
+    <ImageView
+        android:src="@drawable/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/white"
+        android:layout_alignTop="@+id/hello_world"
+        android:layout_alignLeft="@+id/woman"
+        android:layout_alignStart="@+id/woman"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>
