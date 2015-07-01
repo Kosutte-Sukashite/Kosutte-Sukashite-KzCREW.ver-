@@ -1,6 +1,7 @@
 package slj.myapplication;
 
 import android.app.Activity;
+import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -9,13 +10,19 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import android.widget.ImageView;
+import android.graphics.BitmapFactory;
+import android.widget.LinearLayout;
 
-public class Game_Activity extends Activity {
+
+public class Game_Activity extends Activity{
     private static final int SWIPE_MIN_DISTANCE = 120;
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
 
     private GestureDetector mGestureDetector;
+    private ImageView image;
+    private float alpha_i;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,10 +38,13 @@ public class Game_Activity extends Activity {
         return mGestureDetector.onTouchEvent(event);
     }
 
+    public class Test extends Activity {
+
+    }
+
     private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-
             try {
 
                 if (Math.abs(event1.getY() - event2.getY()) > SWIPE_MAX_OFF_PATH) {
@@ -46,17 +56,21 @@ public class Game_Activity extends Activity {
                     // 開始位置から終了位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
+                    alpha_i += 0.001;
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
-                    Toast.makeText(Game_Activity .this, "左から右", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
+                    alpha_i += 0.001;
                 }
+
+                image = (ImageView)findViewById(R.id.white);
+                image.setAlpha(1 - alpha_i);
+                //setContentView(R.layout.white);
 
             } catch (Exception e) {
                 // nothing
-
-
 
             }
             return false;
@@ -85,8 +99,5 @@ public class Game_Activity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
 }
