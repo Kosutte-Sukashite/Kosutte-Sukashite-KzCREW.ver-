@@ -11,8 +11,6 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import android.widget.ImageView;
-import android.graphics.BitmapFactory;
-import android.widget.LinearLayout;
 
 
 public class Game_Activity extends Activity{
@@ -21,6 +19,8 @@ public class Game_Activity extends Activity{
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
 
     private GestureDetector mGestureDetector;
+
+    //透過の変数
     private ImageView image;
     private float alpha_i;
 
@@ -56,18 +56,20 @@ public class Game_Activity extends Activity{
                     // 開始位置から終了位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
+                    //透過度を上げる
                     alpha_i += 0.001;
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
+                    //透過度を上げる
                     alpha_i += 0.001;
                 }
 
+                //透過度の反映
                 image = (ImageView)findViewById(R.id.white);
                 image.setAlpha(1 - alpha_i);
-                //setContentView(R.layout.white);
 
             } catch (Exception e) {
                 // nothing
