@@ -2,12 +2,14 @@ package slj.myapplication;
 
 import android.app.Activity;
 import android.media.Image;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.widget.ImageView;
@@ -30,6 +32,35 @@ public class Game_Activity extends Activity{
         setContentView(R.layout.activity_game_);
 
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
+
+        // 30秒カウントダウンする
+        new CountDownTimer(30000,1000){
+            TextView timer_txt = (TextView)findViewById(R.id.timerText);
+            // カウントダウン処理
+            public void onTick(long millisUntilFinished){
+
+                //ランダムで曇りを足していく
+                alpha_i = alpha_i - (float)((Math.random()) /100) ;
+
+                //透過度の%表示
+                TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
+                alpha_txt.setText(Math.floor(alpha_i * 100 ) + "%");
+
+                //透過度の反映
+                image = (ImageView)findViewById(R.id.white);
+                image.setAlpha(1 - alpha_i);
+
+                //時間表示
+                timer_txt.setText(""+ millisUntilFinished/1000);
+            }
+            // カウントが0になった時の処理
+            public void onFinish(){
+                timer_txt.setText("タイムオーバー");
+            }
+        }.start();
+
+
+
     }
 
     // これがないとGestureDetectorが動かない
@@ -57,19 +88,23 @@ public class Game_Activity extends Activity{
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
                     //透過度を上げる
-                    alpha_i += 0.001;
+                    alpha_i += 0.01;
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
                     //透過度を上げる
-                    alpha_i += 0.001;
+                    alpha_i += 0.01;
                 }
 
                 //透過度の反映
                 image = (ImageView)findViewById(R.id.white);
                 image.setAlpha(1 - alpha_i);
+
+                //透過度の%表示
+                TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
+                alpha_txt.setText(Math.floor(alpha_i * 100 ) + "%");
 
             } catch (Exception e) {
                 // nothing
