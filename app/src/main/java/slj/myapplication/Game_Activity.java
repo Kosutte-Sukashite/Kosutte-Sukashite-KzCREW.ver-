@@ -44,14 +44,14 @@ public class Game_Activity extends Activity{
 
                 //透過度の%表示
                 TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-                alpha_txt.setText(Math.floor(alpha_i * 100 ) + "%");
+                alpha_txt.setText("透過度\n"+  + Math.floor(alpha_i * 100 ) + "%");
 
                 //透過度の反映
                 image = (ImageView)findViewById(R.id.white);
                 image.setAlpha(1 - alpha_i);
 
                 //時間表示
-                timer_txt.setText(""+ millisUntilFinished/1000);
+                timer_txt.setText("TIME:"+ millisUntilFinished/1000);
             }
             // カウントが0になった時の処理
             public void onFinish(){
@@ -104,7 +104,7 @@ public class Game_Activity extends Activity{
 
                 //透過度の%表示
                 TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-                alpha_txt.setText(Math.floor(alpha_i * 100 ) + "%");
+                alpha_txt.setText("透過度\n" + Math.floor(alpha_i * 100 ) + "%");
 
             } catch (Exception e) {
                 // nothing
