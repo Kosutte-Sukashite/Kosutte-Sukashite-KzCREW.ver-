@@ -48,7 +48,7 @@ public class Game_Activity extends Activity{
         setContentView(R.layout.activity_game_);
 
         //リソースファイルから再生 MainBGM
-        main_mp = MediaPlayer.create(this, R.raw.bgm);
+        main_mp = MediaPlayer.create(this, R.raw.gamebgm);
         main_mp.start();
 
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
