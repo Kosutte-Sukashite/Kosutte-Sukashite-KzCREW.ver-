@@ -112,14 +112,14 @@ public class Game_Activity extends Activity{
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
                     //透過度を上げる
-                    alpha_i += 0.01;
+                    alpha_i += 0.005;
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
                     //透過度を上げる
-                    alpha_i += 0.01;
+                    alpha_i += 0.005;
                 }
 
                 //透過度の反映
