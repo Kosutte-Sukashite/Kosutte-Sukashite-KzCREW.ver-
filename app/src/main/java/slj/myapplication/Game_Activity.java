@@ -1,7 +1,6 @@
 package slj.myapplication;
 
 import android.app.Activity;
-import android.media.Image;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import android.widget.ImageView;
+
+//Music
+import android.media.MediaPlayer;
+
+//Music 効果音系
+import android.media.SoundPool;
+import android.media.AudioManager;
 
 
 public class Game_Activity extends Activity{
@@ -26,12 +32,30 @@ public class Game_Activity extends Activity{
     private ImageView image;
     private float alpha_i;
 
+    //Musicの変数
+    private MediaPlayer main_mp;
+    private String path;
+
+    //効果音の変数
+    private SoundPool mSoundPool;
+    private int mSoundId;
+    private SoundPool mSePlayer;
+    private int[] mSound = new int[5];
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_);
 
+        //リソースファイルから再生 MainBGM
+        main_mp = MediaPlayer.create(this, R.raw.bgm);
+        main_mp.start();
+
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
+
+        //効果音保存
+        mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.bom, 1);
 
         // 30秒カウントダウンする
         new CountDownTimer(30000,1000){
@@ -104,7 +128,10 @@ public class Game_Activity extends Activity{
 
                 //透過度の%表示
                 TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-                alpha_txt.setText("透過度\n" + Math.floor(alpha_i * 100 ) + "%");
+                alpha_txt.setText("透過度\n" + Math.floor(alpha_i * 100) + "%");
+
+                //効果音を再生
+                mSePlayer.play(mSound[0], 1.0f, 1.0f, 0, 0, 1.0f);
 
             } catch (Exception e) {
                 // nothing
@@ -136,5 +163,11 @@ public class Game_Activity extends Activity{
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        main_mp.stop();
+        }
 
 }
