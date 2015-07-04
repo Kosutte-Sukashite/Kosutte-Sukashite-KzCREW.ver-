@@ -1,9 +1,10 @@
 package slj.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.CountDownTimer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.Service;
 import android.widget.ImageView;
 
 //Music
@@ -52,12 +53,21 @@ public class Game_Activity extends Activity{
         //リソースファイルから再生 MainBGM
         main_mp = MediaPlayer.create(this, R.raw.gamebgm);
         main_mp.start();
-
+        main_mp.stop();
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
 
         //効果音保存
         mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.bom, 1);
+
+        TextView timer_txt = (TextView)findViewById(R.id.timerText);
+
+//        MyCountDownTimer cdt = new MyCountDownTimer(30000,1000);
+//
+//        cdt.start();
+//
+//        cdt.onFinish();
+//
 
         // 30秒カウントダウンする
         new CountDownTimer(30000,1000){
@@ -68,24 +78,32 @@ public class Game_Activity extends Activity{
                 //ランダムで曇りを足していく
                 alpha_i = alpha_i - (float)((Math.random()) /100) ;
 
-                //透過度の%表示
-                TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-                alpha_txt.setText("透過度\n"+  + Math.floor(alpha_i * 100 ) + "%");
-
-                //透過度の反映
-                image = (ImageView)findViewById(R.id.white);
-                image.setAlpha(1 - alpha_i);
-
+//                //透過度の%表示
+//                TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
+//                alpha_txt.setText("透過度\n"+  + Math.floor(alpha_i * 100 ) + "%");
+//
+//                //透過度の反映
+//                image = (ImageView)findViewById(R.id.white);
+//                image.setAlpha(1 - alpha_i);
+//
                 //時間表示
                 timer_txt.setText("TIME:"+ millisUntilFinished/1000);
             }
             // カウントが0になった時の処理
             public void onFinish(){
-                timer_txt.setText("タイムオーバー");
+                timer_txt.setText("終了!!");
+                //Game_Activity.stop();
+                cancel();
+              //  Intent intent = new Intent(this, ConfirmActivity.class);
+                //Log.i("Game", "cancel_run");
             }
         }.start();
 
 
+
+    }
+
+    private void stop() {
 
     }
 
@@ -95,9 +113,7 @@ public class Game_Activity extends Activity{
         return mGestureDetector.onTouchEvent(event);
     }
 
-    public class Test extends Activity {
 
-    }
 
     private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -115,13 +131,13 @@ public class Game_Activity extends Activity{
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    plus(view);
+                    alpha_i = plus(view);
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    plus(view);
+                    alpha_i = plus(view);
                 }
 
                 if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
@@ -129,23 +145,24 @@ public class Game_Activity extends Activity{
                     // Y軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "下から上", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    plus(view);
+                    alpha_i = plus(view);
 
                 } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // Y軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "上から下", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    plus(view);
+                    alpha_i = plus(view);
                 }
 
                 //透過度の反映
-                image = (ImageView)findViewById(R.id.white);
-                image.setAlpha(1 - alpha_i);
+//                image = (ImageView)findViewById(R.id.white);
+//                image.setAlpha(1 - alpha_i);
 
                 //透過度の%表示
                 TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-                alpha_txt.setText("透過度\n" + Math.floor(alpha_i * 100) + "%");
+                alpha_txt.setText(String.valueOf(alpha_i));
+//                alpha_txt.setText("透過度\n" + Math.floor(alpha_i * 100) + "%");
 
                 //効果音を再生
                 mSePlayer.play(mSound[0], 1.0f, 1.0f, 0, 0, 1.0f);
@@ -184,16 +201,26 @@ public class Game_Activity extends Activity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        main_mp.stop();
+       // main_mp.stop();
+        //Game_Activity.stop();
         }
 
-    private void plus(View view) {
+    private int plus(View view) {
         //こすった数だけ読み込まれる。
         this.view = view;
         mCount++;
         TextView countView = (TextView) findViewById(R.id.textView1);
         //activity_game_.xmlの表示を増やす
         countView.setText(String.valueOf(mCount));
+
+        return  mCount;
     }
+
+
+
+
+
+
+
 
 }
