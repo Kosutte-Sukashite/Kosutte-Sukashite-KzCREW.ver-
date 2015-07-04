@@ -18,8 +18,6 @@ public class ConfirmActivity extends Activity {
 
         TextView txtView = (TextView)findViewById(R.id.eroTextView);
 
-        Resources res = getResources();
-
         txtView.setText(R.string.ohome_txt);
         
     }
