@@ -50,10 +50,13 @@ public class Game_Activity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_);
 
+
+
+
         //リソースファイルから再生 MainBGM
         main_mp = MediaPlayer.create(this, R.raw.gamebgm);
         main_mp.start();
-        main_mp.stop();
+
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
 
         //効果音保存
@@ -78,24 +81,14 @@ public class Game_Activity extends Activity{
                 //ランダムで曇りを足していく
                 alpha_i = alpha_i - (float)((Math.random()) /100) ;
 
-//                //透過度の%表示
-//                TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
-//                alpha_txt.setText("透過度\n"+  + Math.floor(alpha_i * 100 ) + "%");
-//
-//                //透過度の反映
-//                image = (ImageView)findViewById(R.id.white);
-//                image.setAlpha(1 - alpha_i);
-//
                 //時間表示
                 timer_txt.setText("TIME:"+ millisUntilFinished/1000);
             }
             // カウントが0になった時の処理
             public void onFinish(){
                 timer_txt.setText("終了!!");
-                //Game_Activity.stop();
                 cancel();
-              //  Intent intent = new Intent(this, ConfirmActivity.class);
-                //Log.i("Game", "cancel_run");
+                main_mp.stop();
             }
         }.start();
 
@@ -156,8 +149,8 @@ public class Game_Activity extends Activity{
                 }
 
                 //透過度の反映
-//                image = (ImageView)findViewById(R.id.white);
-//                image.setAlpha(1 - alpha_i);
+                image = (ImageView)findViewById(R.id.white);
+                image.setAlpha(255 - alpha_i);
 
                 //透過度の%表示
                 TextView alpha_txt = (TextView)findViewById(R.id.alphaText);
