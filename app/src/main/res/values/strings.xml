@@ -4,4 +4,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_game_">Game_Activity</string>
+
+    //お褒めの言葉一覧
+    <string name="ohome_txt">てすと1</string>
+    <string name="ohome_txt2">てすと2</string>
+    <string name="ohome_txt3">てすと3</string>
+
 </resources>
