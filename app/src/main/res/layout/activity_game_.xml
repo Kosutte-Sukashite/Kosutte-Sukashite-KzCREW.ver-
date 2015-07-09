@@ -7,7 +7,7 @@
     tools:context="slj.myapplication.Game_Activity">
 
     <ImageView
-        android:src="@drawable/woman"
+        android:src="@drawable/w_woman1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/woman"
