@@ -1,6 +1,7 @@
 package slj.myapplication;
 
 
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ public class Alpha {
     private int alpha_i;
     private TextView alpha_text;
     private ImageView imageView;
+    private SoundPool mSePlayer;
 
     //コンストラクタ
     Alpha(Context context){
@@ -28,7 +30,7 @@ public class Alpha {
     //処理
 
     //透過度の変更と音を鳴らす
-    public void alpha_control(){
+    public void alpha_control( int mSound){
         //透過度を上げる 1回の割合の変更 0以下には行わない
         if (alpha_i > 1) {
             alpha_i -= 1;
@@ -36,6 +38,7 @@ public class Alpha {
 
         //透過度の反映
         balance_alpha(alpha_i);
+        mSePlayer.play(mSound, 1.0f, 1.0f, 0, 0, 1.0f);
     }
 
     public int alpha_percent(int alpha){

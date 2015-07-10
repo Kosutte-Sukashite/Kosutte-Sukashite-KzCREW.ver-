@@ -103,14 +103,14 @@ public class Game_Activity extends Activity{
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "右から左", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    alpha.alpha_control();
+                    alpha.alpha_control(mSound[0]);
 
                 } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // X軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "左から右", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    alpha.alpha_control();
+                    alpha.alpha_control(mSound[0]);
                 }
 
                 if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
@@ -118,15 +118,16 @@ public class Game_Activity extends Activity{
                     // Y軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "下から上", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    alpha.alpha_control();
+                    alpha.alpha_control(mSound[0]);
 
                 } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                     // 終了位置から開始位置の移動距離が指定値より大きい
                     // Y軸の移動速度が指定値より大きい
                     Toast.makeText(Game_Activity.this, "上から下", Toast.LENGTH_SHORT).show();
                     //こすった回数をカウント
-                    alpha.alpha_control();
+                    alpha.alpha_control(mSound[0]);
                 }
+
 
 
             } catch (Exception e) {
