@@ -1,6 +1,7 @@
 package slj.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -41,14 +42,12 @@ class MyCountDownTimer extends CountDownTimer {
         timer_txt.setText("TIME:"+ millisUntilFinished/1000);
     }
 
-
     @Override
     public void onFinish() {
         timer_txt.setText("終了!!");
         cancel();
         Flag = Boolean.TRUE;
     }
-
 
     public Boolean GetTimer(){
         return Flag;
