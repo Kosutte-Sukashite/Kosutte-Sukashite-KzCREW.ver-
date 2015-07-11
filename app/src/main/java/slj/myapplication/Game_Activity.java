@@ -1,8 +1,10 @@
 package slj.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,6 +74,16 @@ public class Game_Activity extends Activity{
         if (MyTimer.GetTimer()){
             MyTimer.onFinish();
         }
+
+        Handler handler =  new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Game_Activity.this,ConfirmActivity.class);
+                startActivity(intent);
+                Game_Activity.this.finish();
+            }
+        },30000);
 
     }
 
