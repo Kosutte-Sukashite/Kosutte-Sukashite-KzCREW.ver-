@@ -1,7 +1,11 @@
 package slj.myapplication;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
@@ -28,9 +33,6 @@ public class Game_Activity extends Activity{
 
     private GestureDetector mGestureDetector;
 
-    //透過の変数
-    private ImageView image;
-
     private Alpha alpha;
     private MyCountDownTimer MyTimer;
 
@@ -44,10 +46,11 @@ public class Game_Activity extends Activity{
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
 
-
-
     private int mCount;
-    private View view;
+
+    View view;
+    private ImageView womanView;
+    private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,7 @@ public class Game_Activity extends Activity{
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this,ConfirmActivity.class);
                 startActivity(intent);
                 Game_Activity.this.finish();
@@ -87,9 +91,11 @@ public class Game_Activity extends Activity{
 
     }
 
-    private void stop() {
-
+    protected  void onDestroy(){
+        super.onDestroy();
+        cleanupView(findViewById(R.id.woman));
     }
+
 
     // これがないとGestureDetectorが動かない
     @Override
@@ -173,14 +179,6 @@ public class Game_Activity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        main_mp.stop();
-        //Game_Activity.stop();
-        }
-
     private int plus(View view) {
         //こすった数だけ読み込まれる。
         this.view = view;
@@ -191,6 +189,13 @@ public class Game_Activity extends Activity{
 
         return  mCount;
     }
+
+  public static final void cleanupView(View view){
+      if(view instanceof ImageView){
+          ImageView imageView = (ImageView)view;
+          imageView.setImageDrawable(null);
+      }
+  }
 
 
 }
