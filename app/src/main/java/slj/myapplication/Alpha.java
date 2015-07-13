@@ -30,7 +30,7 @@ public class Alpha {
     //処理
 
     //透過度の変更と音を鳴らす
-    public void alpha_control( int mSound){
+    public void alpha_control( int mSound,SoundPool mSePlayer){
         //透過度を上げる 1回の割合の変更 0以下には行わない
         if (alpha_i > 1) {
             alpha_i -= 1;
