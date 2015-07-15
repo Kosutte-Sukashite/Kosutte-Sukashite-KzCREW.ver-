@@ -10,8 +10,9 @@ import android.view.View.OnClickListener;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.AudioManager;
+import android.widget.ImageView;
 
-    public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener {
         /**
          * Called when the activity is first created.
          */
@@ -36,9 +37,6 @@ import android.media.AudioManager;
             button_segue = (Button) findViewById(R.id.button_segue);
             button_segue.setOnClickListener(this);
 
-            //mp = MediaPlayer.create(this, R.raw.accept);
-            //mp.start();
-
 
             mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.accept, 1);
@@ -47,6 +45,9 @@ import android.media.AudioManager;
 
         public void onClick(View v) {
             if (v == button_segue) {
+                //画像解放
+                cleanupView(findViewById(R.id.woman));
+
                 Intent intent = new Intent(this, Game_Activity.class);
                 startActivityForResult(intent, 0);
 
@@ -55,7 +56,12 @@ import android.media.AudioManager;
             }
         }
 
+        public static final void cleanupView(View view) {
+            if (view instanceof ImageView) {
+                ImageView imageView = (ImageView) view;
+                imageView.setImageDrawable(null);
+            }
 
-
+        }
     }
 
