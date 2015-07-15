@@ -43,6 +43,12 @@ public class MainActivity extends Activity implements OnClickListener {
 
         }
 
+        @Override
+        public void onRestart( ){
+            super.onRestart();
+            setContentView(R.layout.activity_main);
+        }
+
         public void onClick(View v) {
             if (v == button_segue) {
                 //画像解放
