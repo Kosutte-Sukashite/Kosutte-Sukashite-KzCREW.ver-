@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -61,8 +62,16 @@ public class Game_Activity extends Activity{
         MyTimer = new MyCountDownTimer(30000,1000,this,alpha);
 
         //リソースファイルから再生 MainBGM
-        main_mp = MediaPlayer.create(this, R.raw.gamebgm);
-        main_mp.start();
+        try {
+            if (main_mp.isPlaying()) {
+                main_mp.stop();
+                main_mp.release();
+                main_mp = null;
+                main_mp=MediaPlayer.create(this, R.raw.gamebgm);
+            }
+            main_mp.start();
+        } catch (Exception e) {
+        }
 
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
 
@@ -82,7 +91,8 @@ public class Game_Activity extends Activity{
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                main_mp.stop();
+
+                cleanupMedia(main_mp);
                 cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this,ConfirmActivity.class);
                 startActivity(intent);
@@ -94,8 +104,20 @@ public class Game_Activity extends Activity{
 
     protected  void onDestroy(){
         super.onDestroy();
-        main_mp.stop();
+
+        cleanupMedia(main_mp);
         cleanupView(findViewById(R.id.woman));
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (event.getAction()==KeyEvent.ACTION_DOWN) {
+            if(event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+                return false;
+            }
+        }
+        return super.dispatchKeyEvent(event);
     }
 
 
@@ -198,6 +220,18 @@ public class Game_Activity extends Activity{
           imageView.setImageDrawable(null);
       }
   }
+
+    public static final void cleanupMedia(MediaPlayer mediaPlayer){
+        try {
+
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        } catch (Exception e) {
+        }
+    }
 
 
 }
