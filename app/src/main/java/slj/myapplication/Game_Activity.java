@@ -85,6 +85,7 @@ public class Game_Activity extends Activity{
                 main_mp.stop();
                 cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this,ConfirmActivity.class);
+                intent.putExtra("txt",alpha.parcent);
                 startActivity(intent);
                 Game_Activity.this.finish();
             }
@@ -147,8 +148,6 @@ public class Game_Activity extends Activity{
                     //こすった回数をカウント
                     alpha.alpha_control(mSound[0],mSePlayer);
                 }
-
-
 
             } catch (Exception e) {
                 // nothing

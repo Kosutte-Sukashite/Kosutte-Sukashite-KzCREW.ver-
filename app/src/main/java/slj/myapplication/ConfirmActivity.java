@@ -1,6 +1,7 @@
 package slj.myapplication;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,11 +15,15 @@ public class ConfirmActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //吹き出しようTextView取得
+        TextView hukidasi = (TextView)findViewById(R.id.hukidasi);
+
+        Intent intent = getIntent();
+        int alphaValue  =intent.getIntExtra("txt", 0);
+        TxtCreator txtCreator = new TxtCreator();
+        hukidasi.setText(txtCreator.getTxt(alphaValue));
+
         setContentView(R.layout.activity_confirm);
-
-        TextView txtView = (TextView)findViewById(R.id.eroTextView);
-
-        txtView.setText(R.string.ohome_txt);
         
     }
 

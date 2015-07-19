@@ -17,6 +17,8 @@ public class Alpha {
     private ImageView imageView;
     private SoundPool mSePlayer;
 
+    //透過度値
+    public int parcent;
     //コンストラクタ
     Alpha(Context context){
         //初期化
@@ -44,7 +46,7 @@ public class Alpha {
     public int alpha_percent(int alpha){
         alpha = -(alpha_i -255);
 
-        int parcent = (alpha * 100)/255;
+        parcent = (alpha * 100)/255;
         return parcent;
     }
 
@@ -68,4 +70,6 @@ public class Alpha {
         imageView.setAlpha(alpha_i);
     }
 
+
 }
+
