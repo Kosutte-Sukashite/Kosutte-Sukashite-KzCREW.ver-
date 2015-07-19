@@ -36,7 +36,7 @@ class MyCountDownTimer extends CountDownTimer {
     public void onTick(long millisUntilFinished) {
 //        timer_txt.setText("TIME:"+ millisUntilFinished/1000);
         //ランダムで曇りを追加します
-        alpha.alpha_random();
+//        alpha.alpha_random();
 
         //時間表示
         timer_txt.setText("TIME:"+ millisUntilFinished/1000);
