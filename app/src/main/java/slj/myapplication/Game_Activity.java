@@ -99,7 +99,7 @@ public class Game_Activity extends Activity{
                 startActivity(intent);
                 Game_Activity.this.finish();
             }
-        },30000);
+        },35000);
 
     }
 
@@ -226,7 +226,8 @@ public class Game_Activity extends Activity{
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
-                mediaPlayer = null;
+            
+//                mediaPlayer = null;
             }
         } catch (Exception e) {
         }

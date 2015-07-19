@@ -15,16 +15,15 @@ public class ConfirmActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_confirm);
         //吹き出しようTextView取得
-        TextView hukidasi = (TextView)findViewById(R.id.hukidasi);
+        TextView hukidashi = (TextView)findViewById(R.id.hukidasi);
 
         Intent intent = getIntent();
         int alphaValue  =intent.getIntExtra("txt", 0);
         TxtCreator txtCreator = new TxtCreator();
-        hukidasi.setText(txtCreator.getTxt(alphaValue));
+        hukidashi.setText(txtCreator.getTxt(alphaValue));
 
-        setContentView(R.layout.activity_confirm);
-        
     }
 
     @Override

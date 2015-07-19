@@ -4,10 +4,10 @@ package slj.myapplication;
  * Created by Tomi on 2015/07/15.
  */
 public class TxtCreator {
-    private String txt1 = "test1";
-    private String txt2 = "test2";
-    private String txt3 = "test3";
-    private String txt4 = "test4";
+    private String txt1 = "まだまだ";
+    private String txt2 = "見る気あるの";
+    private String txt3 = "あと少し！";
+    private String txt4 = "やったね！";
 
     public String getTxt(long cnt){
         String txt="";
