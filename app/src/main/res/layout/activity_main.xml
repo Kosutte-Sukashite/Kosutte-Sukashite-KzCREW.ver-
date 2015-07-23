@@ -10,13 +10,14 @@
 
     <ImageView
         android:src="@drawable/w_woman2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/woman"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:adjustViewBounds="true"
+        iconNumber="1"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -29,5 +30,18 @@
         android:onClick="onClick"
         android:layout_alignBottom="@+id/woman"
         android:layout_centerHorizontal="true" />
+
+
+    <jp.co.imobile.sdkads.android.ImobileInlineView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        pid="21189"
+        mid="172569"
+        sid="467793"
+        iconNumber="1"
+        iconTitleShadowEnable="false" />
+
 
 </RelativeLayout>
