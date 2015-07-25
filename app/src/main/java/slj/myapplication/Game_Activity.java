@@ -45,10 +45,6 @@ public class Game_Activity extends Activity {
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
 
-    private int mCount;
-
-    View view;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +86,7 @@ public class Game_Activity extends Activity {
             public void run() {
 
                 cleanupMedia(main_mp);
-                cleanupView(findViewById(R.id.woman));
+                //cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this, ConfirmActivity.class);
                 intent.putExtra("txt", alpha.parcent);
                 startActivity(intent);
@@ -104,7 +100,7 @@ public class Game_Activity extends Activity {
         super.onDestroy();
 
         cleanupMedia(main_mp);
-        cleanupView(findViewById(R.id.woman));
+//        cleanupView(findViewById(R.id.woman));
     }
 
     @Override

@@ -1,9 +1,18 @@
 package slj.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.content.Intent;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
@@ -11,6 +20,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.AudioManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends Activity implements OnClickListener {
         /**
@@ -37,7 +47,6 @@ public class MainActivity extends Activity implements OnClickListener {
             button_segue = (Button) findViewById(R.id.button_segue);
             button_segue.setOnClickListener(this);
 
-
             mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.accept, 1);
 
@@ -52,7 +61,7 @@ public class MainActivity extends Activity implements OnClickListener {
         public void onClick(View v) {
             if (v == button_segue) {
                 //画像解放
-                cleanupView(findViewById(R.id.woman));
+//                cleanupView(findViewById(R.id.woman));
 
                 Intent intent = new Intent(this, Game_Activity.class);
                 startActivityForResult(intent, 0);

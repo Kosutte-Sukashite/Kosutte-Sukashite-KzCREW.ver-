@@ -64,6 +64,5 @@ public class Alpha {
         alpha_text.setText("透過度\n" + per + "%");
     }
 
-
 }
 
