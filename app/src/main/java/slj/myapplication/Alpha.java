@@ -33,13 +33,14 @@ public class Alpha {
 
     //透過度の変更と音を鳴らす
     public void alpha_control( int mSound,SoundPool mSePlayer){
-        alpha_i = alpha_i -1;
-        //画像の透過度を変化
-        setAlphaValueInImageView();
-        //テキストビューに透過度表示
-        setTextInAlphaTxt();
-        //音セット
-        mSePlayer.play(mSound, 1.0f, 1.0f, 0, 0, 1.0f);
+        if (alpha_i >0){
+            alpha_i = alpha_i -1;
+            //画像の透過度を変化
+            setAlphaValueInImageView();
+            //テキストビューに透過度表示
+            setTextInAlphaTxt();
+            //音セット
+            mSePlayer.play(mSound, 1.0f, 1.0f, 0, 0, 1.0f);}
     }
 
     public int alpha_percent(){
