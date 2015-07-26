@@ -50,4 +50,15 @@
         iconNumber="1"
         iconTitleShadowEnable="false" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="こすって！"
+        android:id="@+id/animeTxt"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="30sp" />
+
 </RelativeLayout>
