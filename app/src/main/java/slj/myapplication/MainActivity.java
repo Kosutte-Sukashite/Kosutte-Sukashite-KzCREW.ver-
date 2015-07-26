@@ -1,26 +1,13 @@
 package slj.myapplication;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.content.Intent;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.view.View.OnClickListener;
-
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.AudioManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class MainActivity extends Activity implements OnClickListener {
         /**
@@ -28,14 +15,6 @@ public class MainActivity extends Activity implements OnClickListener {
          */
 
         private Button button_segue;
-
-
-        private MediaPlayer mp;
-        private String path;
-
-
-        private SoundPool mSoundPool;
-        private int mSoundId;
         private SoundPool mSePlayer;
         private int[] mSound = new int[5];
 
@@ -50,6 +29,7 @@ public class MainActivity extends Activity implements OnClickListener {
             mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
             mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.accept, 1);
 
+
         }
 
         @Override
@@ -59,24 +39,12 @@ public class MainActivity extends Activity implements OnClickListener {
         }
 
         public void onClick(View v) {
-            if (v == button_segue) {
-                //画像解放
-//                cleanupView(findViewById(R.id.woman));
-
                 Intent intent = new Intent(this, Game_Activity.class);
                 startActivityForResult(intent, 0);
 
-
                 mSePlayer.play(mSound[0], 1.0f, 1.0f, 0, 0, 1.0f);
-            }
-        }
-
-        public static final void cleanupView(View view) {
-            if (view instanceof ImageView) {
-                ImageView imageView = (ImageView) view;
-                imageView.setImageDrawable(null);
-            }
 
         }
+
     }
 
