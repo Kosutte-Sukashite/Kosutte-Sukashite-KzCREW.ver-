@@ -44,7 +44,7 @@ public class Game_Activity extends Activity {
     //効果音の変数
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
-
+    private boolean gamestopflag = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +76,20 @@ public class Game_Activity extends Activity {
         MyTimer.start();
 
         //タイマー終了
-        if (MyTimer.GetTimer()) {
-            MyTimer.onFinish();
-        }
+       //if (MyTimer.GetTimer()) {
 
+         //   MyTimer.onFinish();
+
+//        }
         Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               Game_Activity.this.finishFlag();
+
+            }
+        }, 30000);
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -92,7 +101,13 @@ public class Game_Activity extends Activity {
                 startActivity(intent);
                 Game_Activity.this.finish();
             }
+
         }, 35000);
+
+    }
+
+    private void finishFlag() {
+     gamestopflag = true;
 
     }
 
@@ -124,27 +139,30 @@ public class Game_Activity extends Activity {
 
     private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
+
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-            try {
+            if(gamestopflag == false) {
+                try {
 
-                if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    //こすった回数をカウント
-                    alpha.alpha_control(mSound[0], mSePlayer);
+                    if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        //こすった回数をカウント
+                        alpha.alpha_control(mSound[0], mSePlayer);
 
-                } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
+                    } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+                    }
+
+                    if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+
+                    } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+                    }
+
+                } catch (Exception e) {
+                    // nothing
+
                 }
-
-                if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
-
-                } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
-                }
-
-            } catch (Exception e) {
-                // nothing
-
             }
             return false;
         }
