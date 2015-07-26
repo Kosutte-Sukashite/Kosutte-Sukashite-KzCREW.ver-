@@ -12,8 +12,8 @@
         android:id="@+id/frameLayout">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:id="@+id/imageView2"
             android:src="@drawable/hart"
            />
@@ -22,11 +22,15 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:textSize="25sp"
-            android:singleLine="true"
+            android:paddingBottom="20dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="20dp"
+            android:paddingTop="40dp"
+            android:singleLine="false"
             android:text="New Text"
             android:id="@+id/hukidasi"
             android:gravity="center"
-            />
+        />
 
     </FrameLayout>
 
