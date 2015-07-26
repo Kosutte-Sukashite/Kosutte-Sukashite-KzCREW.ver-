@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +18,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
@@ -54,6 +59,19 @@ public class Game_Activity extends Activity {
         alpha = new Alpha(this);
         MyTimer = new MyCountDownTimer(30000, 1000, this, alpha);
 
+        //アニメーション用テキストビュー
+        TextView animTxt = (TextView)findViewById(R.id.animeTxt);
+        Animation animation= AnimationUtils.loadAnimation(this, R.animator.anim);
+        animTxt.startAnimation(animation);
+
+        WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+        Display disp = wm.getDefaultDisplay();
+        Point size = new Point();
+        disp.getSize(size);
+
+        RandomShow randomShow = new RandomShow(2000,true,animTxt,size.x,size.y);
+        randomShow.execute();
+
         //リソースファイルから再生 MainBGM
         try {
             if (main_mp.isPlaying()) {
@@ -74,13 +92,7 @@ public class Game_Activity extends Activity {
 
         //タイマー開始
         MyTimer.start();
-
-        //タイマー終了
-       //if (MyTimer.GetTimer()) {
-
-         //   MyTimer.onFinish();
-
-//        }
+        
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
