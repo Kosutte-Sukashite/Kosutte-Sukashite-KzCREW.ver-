@@ -73,16 +73,9 @@ public class Game_Activity extends Activity {
         randomShow.execute();
 
         //リソースファイルから再生 MainBGM
-        try {
-            if (main_mp.isPlaying()) {
-                main_mp.stop();
-                main_mp.release();
-                main_mp = null;
-                main_mp = MediaPlayer.create(this, R.raw.gamebgm);
-            }
-            main_mp.start();
-        } catch (Exception e) {
-        }
+        main_mp = MediaPlayer.create(this, R.raw.gamebgm);
+        main_mp.start();
+
 
         mGestureDetector = new GestureDetector(this, mOnGestureListener);
 
