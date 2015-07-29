@@ -4,7 +4,7 @@ package slj.myapplication;
  * Created by Tomi on 2015/07/15.
  */
 public class TxtCreator {
-    private String txt1 = "まだまだ";
+    private String txt1 = "エロさが   たりないわ";
     private String txt2 = "見る気あるの";
     private String txt3 = "あと少し！";
     private String txt4 = "やったね！";

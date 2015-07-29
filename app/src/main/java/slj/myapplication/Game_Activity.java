@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -16,6 +18,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
@@ -44,11 +49,7 @@ public class Game_Activity extends Activity {
     //効果音の変数
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
-
-    private int mCount;
-
-    View view;
-
+    private boolean gamestopflag = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,19 @@ public class Game_Activity extends Activity {
         //クラスの作成
         alpha = new Alpha(this);
         MyTimer = new MyCountDownTimer(30000, 1000, this, alpha);
+
+        //アニメーション用テキストビュー
+        TextView animTxt = (TextView)findViewById(R.id.animeTxt);
+        Animation animation= AnimationUtils.loadAnimation(this, R.animator.anim);
+        animTxt.startAnimation(animation);
+
+        WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+        Display disp = wm.getDefaultDisplay();
+        Point size = new Point();
+        disp.getSize(size);
+
+        RandomShow randomShow = new RandomShow(2000,true,animTxt,size.x,size.y);
+        randomShow.execute();
 
         //リソースファイルから再生 MainBGM
         try {
@@ -78,25 +92,34 @@ public class Game_Activity extends Activity {
 
         //タイマー開始
         MyTimer.start();
-
-        //タイマー終了
-        if (MyTimer.GetTimer()) {
-            MyTimer.onFinish();
-        }
-
+        
         Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               Game_Activity.this.finishFlag();
+
+            }
+        }, 30000);
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 cleanupMedia(main_mp);
-                cleanupView(findViewById(R.id.woman));
+                //cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this, ConfirmActivity.class);
                 intent.putExtra("txt", alpha.parcent);
                 startActivity(intent);
                 Game_Activity.this.finish();
             }
+
         }, 35000);
+
+    }
+
+    private void finishFlag() {
+     gamestopflag = true;
 
     }
 
@@ -104,7 +127,7 @@ public class Game_Activity extends Activity {
         super.onDestroy();
 
         cleanupMedia(main_mp);
-        cleanupView(findViewById(R.id.woman));
+//        cleanupView(findViewById(R.id.woman));
     }
 
     @Override
@@ -128,27 +151,30 @@ public class Game_Activity extends Activity {
 
     private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
+
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-            try {
+            if(gamestopflag == false) {
+                try {
 
-                if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    //こすった回数をカウント
-                    alpha.alpha_control(mSound[0], mSePlayer);
+                    if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        //こすった回数をカウント
+                        alpha.alpha_control(mSound[0], mSePlayer);
 
-                } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
+                    } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+                    }
+
+                    if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+
+                    } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                        alpha.alpha_control(mSound[0], mSePlayer);
+                    }
+
+                } catch (Exception e) {
+                    // nothing
+
                 }
-
-                if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
-
-                } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    alpha.alpha_control(mSound[0], mSePlayer);
-                }
-
-            } catch (Exception e) {
-                // nothing
-
             }
             return false;
         }
