@@ -73,7 +73,7 @@ public class Game_Activity extends Activity {
         randomShow.execute();
 
         //リソースファイルから再生 MainBGM
-        main_mp = MediaPlayer.create(this, R.raw.gamebgm);
+        main_mp = MediaPlayer.create(this, R.raw.back_bgm);
         main_mp.start();
 
 

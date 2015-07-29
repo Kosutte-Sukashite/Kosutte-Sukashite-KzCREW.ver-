@@ -40,7 +40,7 @@ public class Alpha {
             //テキストビューに透過度表示
             setTextInAlphaTxt();
             //音セット
-            mSePlayer.play(mSound, 1.0f, 1.0f, 0, 0, 1.0f);}
+            mSePlayer.play(mSound, 0.5f, 0.5f, 0, 0, 1.0f);}
     }
 
     public int alpha_percent(){

@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".MainActivity"
-    android:background="@drawable/w_main">
+    android:background="@drawable/w_woman_main">
 
     <ImageButton
         android:layout_width="wrap_content"
