@@ -81,7 +81,7 @@ public class Game_Activity extends Activity {
 
         //効果音保存
         mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.bom, 1);
+        mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.magic, 1);
 
         //タイマー開始
         MyTimer.start();

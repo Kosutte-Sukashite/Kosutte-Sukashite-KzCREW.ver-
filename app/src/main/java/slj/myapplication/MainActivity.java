@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements OnClickListener {
             button_segue.setOnClickListener(this);
 
             mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-            mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.accept, 1);
+            mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.baththapon, 1);
 
 
         }
