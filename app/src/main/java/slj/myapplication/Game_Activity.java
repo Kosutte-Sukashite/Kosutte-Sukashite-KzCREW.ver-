@@ -33,8 +33,7 @@ import android.media.SoundPool;
 import android.media.AudioManager;
 
 public class Game_Activity extends Activity {
-    private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_MIN_DISTANCE = 50;
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
 
     private GestureDetector mGestureDetector;
@@ -44,7 +43,6 @@ public class Game_Activity extends Activity {
 
     //Musicの変数
     private MediaPlayer main_mp;
-    private String path;
 
     //効果音の変数
     private SoundPool mSePlayer;
@@ -64,6 +62,7 @@ public class Game_Activity extends Activity {
         Animation animation= AnimationUtils.loadAnimation(this, R.animator.anim);
         animTxt.startAnimation(animation);
 
+        //画面サイズ取得
         WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
         Display disp = wm.getDefaultDisplay();
         Point size = new Point();
@@ -72,7 +71,7 @@ public class Game_Activity extends Activity {
         RandomShow randomShow = new RandomShow(2000,true,animTxt,size.x,size.y);
         randomShow.execute();
 
-        //リソースファイルから再生 MainBGM
+       //リソースファイルから再生 MainBGM
         main_mp = MediaPlayer.create(this, R.raw.back_bgm);
         main_mp.start();
 
@@ -100,7 +99,6 @@ public class Game_Activity extends Activity {
             public void run() {
 
                 cleanupMedia(main_mp);
-                //cleanupView(findViewById(R.id.woman));
                 Intent intent = new Intent(Game_Activity.this, ConfirmActivity.class);
                 intent.putExtra("txt", alpha.parcent);
                 startActivity(intent);
@@ -138,6 +136,12 @@ public class Game_Activity extends Activity {
     // これがないとGestureDetectorが動かない
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if(event.getAction() == MotionEvent.ACTION_MOVE){
+            alpha.alpha_control();
+            mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+        }
+        
         return mGestureDetector.onTouchEvent(event);
     }
 
@@ -146,29 +150,38 @@ public class Game_Activity extends Activity {
         @Override
 
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-            if(gamestopflag == false) {
-                try {
 
-                    if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        //こすった回数をカウント
-                        alpha.alpha_control(mSound[0], mSePlayer);
 
-                    } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        alpha.alpha_control(mSound[0], mSePlayer);
-                    }
-
-                    if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                        alpha.alpha_control(mSound[0], mSePlayer);
-
-                    } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                        alpha.alpha_control(mSound[0], mSePlayer);
-                    }
-
-                } catch (Exception e) {
-                    // nothing
-
-                }
-            }
+//            if(gamestopflag == false) {
+//                try {
+//
+//                    if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+//                        //透過下げる
+//                        alpha.alpha_control();
+//
+//                        //アクション音
+//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+//                    } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+//                        alpha.alpha_control();
+//
+//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+//                    }
+//
+//                    if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+//                        alpha.alpha_control();
+//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+//
+//                    } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+//                        alpha.alpha_control();
+//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+//
+//                    }
+//
+//                } catch (Exception e) {
+//                    // nothing
+//
+//                }
+//            }
             return false;
         }
     };
@@ -195,12 +208,6 @@ public class Game_Activity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-  public static final void cleanupView(View view){
-      if(view instanceof ImageView){
-          ImageView imageView = (ImageView)view;
-          imageView.setImageDrawable(null);
-      }
-  }
 
     public static final void cleanupMedia(MediaPlayer mediaPlayer){
         try {
