@@ -1,29 +1,19 @@
 package slj.myapplication;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ImageView;
 
 //Music
 import android.media.MediaPlayer;
@@ -33,11 +23,6 @@ import android.media.SoundPool;
 import android.media.AudioManager;
 
 public class Game_Activity extends Activity {
-    private static final int SWIPE_MIN_DISTANCE = 50;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
-
-    private GestureDetector mGestureDetector;
-
     private Alpha alpha;
     private MyCountDownTimer MyTimer;
 
@@ -47,7 +32,7 @@ public class Game_Activity extends Activity {
     //効果音の変数
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
-    private boolean gamestopflag = false;
+    private boolean gamestopflag;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,24 +60,15 @@ public class Game_Activity extends Activity {
         main_mp = MediaPlayer.create(this, R.raw.back_bgm);
         main_mp.start();
 
-
-        mGestureDetector = new GestureDetector(this, mOnGestureListener);
-
         //効果音保存
         mSePlayer = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         mSound[0] = mSePlayer.load(getApplicationContext(), R.raw.magic, 1);
 
         //タイマー開始
         MyTimer.start();
-        
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-               Game_Activity.this.finishFlag();
 
-            }
-        }, 30000);
+        gamestopflag = false;
+        Handler handler = new Handler();
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -109,16 +85,10 @@ public class Game_Activity extends Activity {
 
     }
 
-    private void finishFlag() {
-     gamestopflag = true;
-
-    }
-
     protected void onDestroy() {
         super.onDestroy();
 
         cleanupMedia(main_mp);
-//        cleanupView(findViewById(R.id.woman));
     }
 
     @Override
@@ -132,59 +102,18 @@ public class Game_Activity extends Activity {
         return super.dispatchKeyEvent(event);
     }
 
-
-    // これがないとGestureDetectorが動かない
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(event.getAction() == MotionEvent.ACTION_MOVE){
-            alpha.alpha_control();
-            mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+        if(event.getAction() == MotionEvent.ACTION_MOVE) {
+                //透過度を下げる
+                alpha.alpha_control();
+                mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
+
+            return  gamestopflag;
         }
-        
-        return mGestureDetector.onTouchEvent(event);
+        return gamestopflag;
     }
-
-
-    private final GestureDetector.SimpleOnGestureListener mOnGestureListener = new GestureDetector.SimpleOnGestureListener() {
-        @Override
-
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-
-
-//            if(gamestopflag == false) {
-//                try {
-//
-//                    if (event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                        //透過下げる
-//                        alpha.alpha_control();
-//
-//                        //アクション音
-//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
-//                    } else if (event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//                        alpha.alpha_control();
-//
-//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
-//                    }
-//
-//                    if (event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-//                        alpha.alpha_control();
-//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
-//
-//                    } else if (event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-//                        alpha.alpha_control();
-//                        mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
-//
-//                    }
-//
-//                } catch (Exception e) {
-//                    // nothing
-//
-//                }
-//            }
-            return false;
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
