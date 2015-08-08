@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context="slj.myapplication.Game_Activity"
-    android:background="@drawable/w_woman1">
+    android:id="@+id/backgrund"
+   >
 
     <ImageView
         android:src="@drawable/white"

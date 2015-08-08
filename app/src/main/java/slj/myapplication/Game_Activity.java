@@ -3,6 +3,9 @@ package slj.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -13,14 +16,13 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-//Music
-import android.media.MediaPlayer;
+import java.util.Random;
 
+//Music
 //Music 効果音系
-import android.media.SoundPool;
-import android.media.AudioManager;
 
 public class Game_Activity extends Activity {
     private Alpha alpha;
@@ -33,10 +35,13 @@ public class Game_Activity extends Activity {
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
     private boolean gamestopflag;
+    boolean flag = true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_);
+
+        Createbackgrund();
 
         //クラスの作成
         alpha = new Alpha(this);
@@ -74,6 +79,15 @@ public class Game_Activity extends Activity {
             @Override
             public void run() {
 
+                flag = false;
+            }
+
+        }, 30000);
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
                 cleanupMedia(main_mp);
                 Intent intent = new Intent(Game_Activity.this, ConfirmActivity.class);
                 intent.putExtra("txt", alpha.parcent);
@@ -84,6 +98,23 @@ public class Game_Activity extends Activity {
         }, 35000);
 
     }
+
+    private void Createbackgrund() {
+        int ram;
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.backgrund);
+        Random rnd = new Random();
+
+        ram = rnd.nextInt(2);
+        if(ram == 1) {
+            layout.setBackgroundResource(R.drawable.w_woman1);
+        }
+
+        if(ram == 0){
+            layout.setBackgroundResource(R.drawable.sample);
+        }
+
+    }
+
 
     protected void onDestroy() {
         super.onDestroy();
@@ -104,13 +135,14 @@ public class Game_Activity extends Activity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        if(event.getAction() == MotionEvent.ACTION_MOVE) {
+        if (flag == true) {
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 //透過度を下げる
                 alpha.alpha_control();
                 mSePlayer.play(mSound[0], 0.5f, 0.5f, 0, 0, 1.0f);
 
-            return  gamestopflag;
+                return gamestopflag;
+            }
         }
         return gamestopflag;
     }
