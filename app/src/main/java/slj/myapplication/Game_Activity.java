@@ -104,13 +104,19 @@ public class Game_Activity extends Activity {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.backgrund);
         Random rnd = new Random();
 
-        ram = rnd.nextInt(2);
+        ram = rnd.nextInt(3);
+        if(ram == 2) {
+            //layout.setBackgroundResource(R.drawable.w_woman1);
+            //ここの画像名を別の画像に変更
+        }
+
         if(ram == 1) {
             layout.setBackgroundResource(R.drawable.w_woman1);
         }
 
         if(ram == 0){
-            layout.setBackgroundResource(R.drawable.sample);
+           // layout.setBackgroundResource(R.drawable.sample);
+           // ここのsampleを別の画像名に変更
         }
 
     }
