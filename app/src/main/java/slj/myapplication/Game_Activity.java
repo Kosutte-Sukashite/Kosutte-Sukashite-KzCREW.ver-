@@ -106,16 +106,16 @@ public class Game_Activity extends Activity {
 
         ram = rnd.nextInt(3);
         if(ram == 2) {
-            //layout.setBackgroundResource(R.drawable.w_woman1);
+            layout.setBackgroundResource(R.drawable.w_woman1);
             //ここの画像名を別の画像に変更
         }
 
         if(ram == 1) {
-            layout.setBackgroundResource(R.drawable.w_woman1);
+            layout.setBackgroundResource(R.drawable.cool_woman);
         }
 
         if(ram == 0){
-           // layout.setBackgroundResource(R.drawable.sample);
+            layout.setBackgroundResource(R.drawable.positive_woman);
            // ここのsampleを別の画像名に変更
         }
 
