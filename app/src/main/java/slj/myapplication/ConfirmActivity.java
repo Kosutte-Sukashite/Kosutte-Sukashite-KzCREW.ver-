@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -24,6 +26,15 @@ public class ConfirmActivity extends Activity {
         TxtCreator txtCreator = new TxtCreator();
         hukidashi.setText(txtCreator.getTxt(alphaValue));
 
+        Button btn = (Button)findViewById(R.id.button2);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfirmActivity.this, MainActivity.class);
+                // 次画面のアクティビティ起動
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
