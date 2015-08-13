@@ -26,7 +26,7 @@ public class ConfirmActivity extends Activity {
         TxtCreator txtCreator = new TxtCreator();
         hukidashi.setText(txtCreator.getTxt(alphaValue));
 
-        Button btn = (Button)findViewById(R.id.button2);
+        Button btn = (Button)findViewById(R.id.backButton);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
