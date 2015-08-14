@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="slj.myapplication.Game_Activity"
+    tools:context="slj.kzcrew.Game_Activity"
     android:id="@+id/backgrund"
    >
 
@@ -35,7 +35,7 @@
         android:id="@+id/alphaText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="透過度 \n 0%"
+        android:text="こすり度 \n 0%"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView1"
         android:layout_toEndOf="@+id/textView1"
