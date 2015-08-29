@@ -1,10 +1,9 @@
-package slj.myapplication;
+package slj.kzcrew;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.media.SoundPool;
 import android.media.AudioManager;

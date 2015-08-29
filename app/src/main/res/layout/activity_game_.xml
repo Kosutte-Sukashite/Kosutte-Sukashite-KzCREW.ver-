@@ -37,8 +37,6 @@
         android:layout_height="wrap_content"
         android:text="こすり度 \n 0%"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView1"
-        android:layout_toEndOf="@+id/textView1"
         android:layout_margin="10sp" />
 
     <TextView

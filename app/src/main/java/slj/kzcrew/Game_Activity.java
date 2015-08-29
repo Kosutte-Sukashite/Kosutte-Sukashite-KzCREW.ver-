@@ -1,4 +1,4 @@
-package slj.myapplication;
+package slj.kzcrew;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,14 +34,15 @@ public class Game_Activity extends Activity {
     //効果音の変数
     private SoundPool mSePlayer;
     private int[] mSound = new int[5];
-    private boolean gamestopflag;
     boolean flag = true;
+    boolean gamestopflag;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_);
 
-        Createbackgrund();
+        //背景画像セット
+        setbackgrund();
 
         //クラスの作成
         alpha = new Alpha(this);
@@ -54,9 +55,9 @@ public class Game_Activity extends Activity {
 
         //画面サイズ取得
         WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
-        Display disp = wm.getDefaultDisplay();
+        Display display = wm.getDefaultDisplay();
         Point size = new Point();
-        disp.getSize(size);
+        display.getSize(size);
 
         RandomShow randomShow = new RandomShow(2000,true,animTxt,size.x,size.y);
         randomShow.execute();
@@ -78,11 +79,10 @@ public class Game_Activity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 flag = false;
             }
-
         }, 30000);
+
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -93,30 +93,25 @@ public class Game_Activity extends Activity {
                 startActivity(intent);
                 Game_Activity.this.finish();
             }
-
         }, 35000);
 
     }
 
-    private void Createbackgrund() {
-        int ram;
-        RelativeLayout layout = (RelativeLayout) findViewById(R.id.backgrund);
+    private void setbackgrund() {
+        //乱数
         Random rnd = new Random();
+        //画像名配列
+        String[] imageNameAry= {"image1","image2","image3"};
+        int ram = rnd.nextInt(imageNameAry.length);
 
-        ram = rnd.nextInt(3);
-        if(ram == 2) {
-            layout.setBackgroundResource(R.drawable.image1);
-            //ここの画像名を別の画像に変更
-        }
+        //画像名
+        String imageName = imageNameAry[ram];
 
-        if(ram == 1) {
-            layout.setBackgroundResource(R.drawable.image2);
-        }
+        //リソースID
+        int rid = getResources().getIdentifier(imageName, "drawable", getPackageName());
 
-        if(ram == 0){
-            layout.setBackgroundResource(R.drawable.image3);
-           // ここのsampleを別の画像名に変更
-        }
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.backgrund);
+        layout.setBackgroundResource(rid);
 
     }
 

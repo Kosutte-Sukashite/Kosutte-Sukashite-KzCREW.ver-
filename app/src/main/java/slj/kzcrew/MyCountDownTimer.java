@@ -1,11 +1,8 @@
-package slj.myapplication;
+package slj.kzcrew;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.widget.TextView;
-import slj.myapplication.Alpha;
 
 /**
  * Created by user on 15/07/04.
@@ -27,7 +24,7 @@ class MyCountDownTimer extends CountDownTimer {
      */
     MyCountDownTimer(long millisInFuture, long countDownInterval,Context context,Alpha alpha_tmp) {
         super(millisInFuture, countDownInterval);
-        timer_txt = (TextView) ((slj.myapplication.Game_Activity) context).findViewById(R.id.timerText);
+        timer_txt = (TextView) ((slj.kzcrew.Game_Activity) context).findViewById(R.id.timerText);
         alpha = alpha_tmp;
         Flag = Boolean.FALSE;
     }

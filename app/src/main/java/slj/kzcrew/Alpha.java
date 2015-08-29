@@ -1,12 +1,9 @@
-package slj.myapplication;
+package slj.kzcrew;
 
 
-import android.media.SoundPool;
-import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
-import android.widget.TextView;
 
 /**
  * Created by SLJ on 2015/07/03.
@@ -25,9 +22,9 @@ public class Alpha {
         alpha_i = 255;
 
         //透過度表示用TextView
-        alpha_text = (TextView) ((slj.myapplication.Game_Activity) context).findViewById(R.id.alphaText);
+        alpha_text = (TextView) ((slj.kzcrew.Game_Activity) context).findViewById(R.id.alphaText);
         //透過画像
-        imageView = (ImageView) ((slj.myapplication.Game_Activity) context).findViewById(R.id.white);
+        imageView = (ImageView) ((slj.kzcrew.Game_Activity) context).findViewById(R.id.white);
 
     }
 
@@ -67,7 +64,7 @@ public class Alpha {
     //透過度をTextViewに表示
     public void setTextInAlphaTxt(){
         int per = alpha_percent();
-        alpha_text.setText("透過度\n" + per + "%");
+        alpha_text.setText("すかし度\n" + per + "%");
     }
 
 }
